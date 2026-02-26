@@ -127,11 +127,16 @@ def main():
             summary_list.sort(key=lambda x: x['count'], reverse=True)
 
             print("=> 计算结果 (按 count 降序排序):")
+            total_all_shards = 0
             for item in summary_list:
                 if item['count'] >= 0:
                     print(f"   [SHARD_ID: {item['sid']:<8}] {item['msg']}")
+                    total_all_shards += item['count']
                 else:
                     print(f"   [SHARD_ID: {item['sid']:<8}] 结果: {item['msg']}")
+
+            print("-" * 50)
+            print(f"=> 所有 SHARD 记录总数: {total_all_shards}")
 
     except pymysql.MySQLError as e:
         print(f"\n[错误] 数据库连接或执行失败: {e}")
